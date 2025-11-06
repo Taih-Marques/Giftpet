@@ -10,8 +10,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.giftpet.giftpet.model.Campaign;
+import com.giftpet.giftpet.model.Event;
 import com.giftpet.giftpet.model.Image;
 import com.giftpet.giftpet.repository.CampaignRepository;
+import com.giftpet.giftpet.repository.EventRepository;
 import com.giftpet.giftpet.service.UsuarioService;
 
 import jakarta.annotation.PostConstruct;
@@ -22,11 +24,13 @@ import lombok.AllArgsConstructor;
 public class BaseTeste {
     private UsuarioService userService;
     private CampaignRepository campaignRepository;
+    private EventRepository eventRepository; // adicionar injeção do EventRepository
 
     @PostConstruct
     public void inicializar() {
         criarUsuarios();
-        createCampaign();
+        createCampaigns();
+        createEvents();
     }
 
     public void criarUsuarios() {
@@ -34,7 +38,7 @@ public class BaseTeste {
         userService.criarUsuario("Usuario", "usuario@exemplo.com", "123", false);
     }
 
-    public void createCampaign() {
+    public void createCampaigns() {
 
         String campaignDescription = """
             💔 Ajude o Thor a Voltar a Respirar sem Dor
@@ -61,6 +65,26 @@ public class BaseTeste {
         var images = List.of(new Image(findAndConvertImage("thor-campaign.png")));
         var campaign = new Campaign(null, "Castração do Thor", campaignDescription, BigDecimal.valueOf(2059.44), LocalDate.of(2025, 12, 24), images);
         campaignRepository.save(campaign);
+    }
+
+    public void createEvents() {
+       
+        var campaignOpt = campaignRepository.findAll().stream().findFirst();
+        if (campaignOpt.isEmpty()) return;
+        var campaign = campaignOpt.get();
+
+        var event = new Event(
+            null,
+            "Feira de Adoção",
+            campaign,
+            "Feira para adoção de animais resgatados.",
+            30,
+            BigDecimal.valueOf(500.00),
+            LocalDate.of(2024, 11, 10),
+            List.of(new Image(findAndConvertImage("caes-de-rua.jpg")))
+        );
+
+        eventRepository.saveAll(List.of(event));
     }
 
     private String findAndConvertImage(String path) {
