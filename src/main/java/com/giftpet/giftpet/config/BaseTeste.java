@@ -58,11 +58,9 @@ public class BaseTeste {
             Obrigado de coração a todos que puderem colaborar ou compartilhar.
             """;
 
-
         var images = List.of(new Image(findAndConvertImage("thor-campaign.png")));
         var campaign = new Campaign(null, "Castração do Thor", campaignDescription, BigDecimal.valueOf(2059.44), LocalDate.of(2025, 12, 24), images);
         campaignRepository.save(campaign);
-
     }
 
     private String findAndConvertImage(String path) {
