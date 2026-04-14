@@ -14,28 +14,28 @@ import com.giftpet.giftpet.model.Event;
 import com.giftpet.giftpet.model.Image;
 import com.giftpet.giftpet.repository.CampaignRepository;
 import com.giftpet.giftpet.repository.EventRepository;
-import com.giftpet.giftpet.service.UsuarioService;
+import com.giftpet.giftpet.service.UserService;
 
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-public class BaseTeste {
-    private UsuarioService userService;
+public class TestDataInitializer {
+    private UserService userService;
     private CampaignRepository campaignRepository;
     private EventRepository eventRepository; // adicionar injeção do EventRepository
 
     @PostConstruct
-    public void inicializar() {
-        criarUsuarios();
+    public void initialize() {
+        createUsers();
         createCampaigns();
         createEvents();
     }
 
-    public void criarUsuarios() {
-        userService.criarUsuario("Admin", "admin@giftpet.org", "123", true);
-        userService.criarUsuario("Usuario", "usuario@exemplo.com", "123", false);
+    public void createUsers() {
+        userService.createUser("Admin", "admin@giftpet.org", "123", true);
+        userService.createUser("Usuario", "usuario@exemplo.com", "123", false);
     }
 
     public void createCampaigns() {

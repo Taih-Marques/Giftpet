@@ -18,10 +18,10 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWT {
 
-    @Value("${jwt.segredo}")
+    @Value("${jwt.secret}")
     private String secretKey;
 
-    @Value("${jwt.tempo-expiracao}")
+    @Value("${jwt.expiration-time}")
     private long jwtExpiration;
 
     private SecretKey getSignInKey() {

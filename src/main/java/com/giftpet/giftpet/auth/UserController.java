@@ -16,18 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/user")
 @AllArgsConstructor
-public class UsuarioController {
-
-private final AuthenticationManager authenticationManager;
+public class UserController {
+    private final AuthenticationManager authenticationManager;
     private final JWT jwtService; 
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest body) {
         try {
             Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(body.email(), body.senha())
+                new UsernamePasswordAuthenticationToken(body.email(), body.password())
             );
 
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
