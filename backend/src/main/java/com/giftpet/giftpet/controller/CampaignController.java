@@ -9,6 +9,8 @@ import com.giftpet.giftpet.model.Campaign;
 import com.giftpet.giftpet.service.CampaignService;
 
 import lombok.AllArgsConstructor;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -21,11 +23,13 @@ public class CampaignController {
     private final CampaignService service;
 
     @GetMapping
+    @PreAuthorize("permitAll()")
     public List<Campaign> findAll() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("permitAll()")
     public Campaign findById(@PathVariable int id) {
         return service.findById(id);
     }

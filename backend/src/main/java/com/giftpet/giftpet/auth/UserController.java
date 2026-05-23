@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ public class UserController {
     private final JWT jwtService; 
     
     @PostMapping("/login")
+    @PreAuthorize("isAnonymous()")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest body) {
         try {
             Authentication auth = authenticationManager.authenticate(
