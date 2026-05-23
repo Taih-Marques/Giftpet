@@ -17,8 +17,8 @@ import lombok.Setter;
 public class Image {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @Column(columnDefinition = "text")
     @NotBlank(message = "Content cannot be blank")
