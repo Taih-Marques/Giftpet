@@ -1,0 +1,15 @@
+<h1>Campanhas</h1>
+@if (campaigns$ | async; as campaigns) {
+  @for(campaign of campaigns; track campaign.id) {
+    <article>
+      <p>{{campaign.id}} - {{campaign.name}} - {{campaign.goal | currency:'BRL':undefined:undefined:'pt-BR'}}</p>
+      @if (campaign.images.length) {
+        <div [style]="{'position': 'relative', 'width': '300px', 'height': '200px'}">
+          <img [ngSrc]="'/api/image/content/' + campaign.images[0].id" alt="Imagem principal da campanha" fill priority/>
+        </div>
+      } @else {
+        Esta campanha não tem imagens.
+      }
+    </article>
+  }
+}
