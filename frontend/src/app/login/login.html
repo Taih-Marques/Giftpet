@@ -1,0 +1,15 @@
+<p-button (click)="showDialog()" label="Show" />
+<p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+  <ng-template #headless>
+    <div [style]="{ 'margin': '12px 24px 0 0', 'text-align': 'end'}">
+      <p-button icon="pi pi-times" aria-label="Close" (onClick)="close()" />
+    </div>
+      <section class="login-modal">
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()">
+          <input type="email" formControlName="email" placeholder="Email" />
+          <input type="password" formControlName="password" placeholder="Senha" />
+          <button type="submit" [disabled]="isSubmitting || loginForm.invalid">Login</button>
+        </form>
+      </section>
+  </ng-template>
+</p-dialog>

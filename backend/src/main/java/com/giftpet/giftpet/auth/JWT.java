@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.giftpet.giftpet.model.User;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -30,6 +32,9 @@ public class JWT {
     }
 
     public String generateToken(UserDetails userDetails) {
+        if (userDetails instanceof User user) {
+            return generateToken(Map.of("name", user.getName()), userDetails);
+        }
         return generateToken(Map.of(), userDetails);
     }
 

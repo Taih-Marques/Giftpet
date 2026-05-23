@@ -1,5 +1,6 @@
 package com.giftpet.giftpet.auth;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class UserController {
     private final JWT jwtService; 
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest body) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest body) {
         try {
             Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(body.email(), body.password())
@@ -31,7 +32,8 @@ public class UserController {
 
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
             String token = jwtService.generateToken(userDetails);
-            return ResponseEntity.ok(token);
+            
+            return ResponseEntity.ok(Collections.singletonMap("access_token", token));
         } catch (AuthenticationException ex) {
             return ResponseEntity.status(401).body(Map.of("error", "Credenciais inválidas"));
         }
