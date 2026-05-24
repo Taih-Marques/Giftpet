@@ -4,10 +4,11 @@ import { User, UserService } from '../user/user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-home',
-  imports: [Login, CommonModule],
+  imports: [Login, CommonModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

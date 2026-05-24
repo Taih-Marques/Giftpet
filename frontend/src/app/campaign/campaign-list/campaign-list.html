@@ -1,4 +1,6 @@
 <h1>Campanhas</h1>
+<input id="search" type="text" placeholder="Buscar campanha..." pInputText [formControl]="searchText" />
+<p-button icon="pi pi-search" aria-label="Pesquisar" (onClick)="findCampaigns()"/>
 @if (campaigns$ | async; as campaigns) {
   @for(campaign of campaigns; track campaign.id) {
     <article>

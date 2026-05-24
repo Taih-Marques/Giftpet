@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Campaign } from './campaign';
 
 @Injectable({
@@ -10,7 +10,11 @@ export class CampaignService {
   private readonly baseUrl = `${environment.apiHost}/campaign`;
   private readonly http = inject(HttpClient);
 
-  getCampaigns() {
-    return this.http.get<Campaign[]>(this.baseUrl);
+  getCampaigns(searchText?: string) {
+    let params = new HttpParams();
+    if (searchText?.trim().length) {
+      params = params.append('search', searchText);
+    }
+    return this.http.get<Campaign[]>(this.baseUrl, { params });
   }
 }

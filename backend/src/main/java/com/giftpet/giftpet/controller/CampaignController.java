@@ -3,6 +3,7 @@ package com.giftpet.giftpet.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.giftpet.giftpet.model.Campaign;
@@ -24,8 +25,8 @@ public class CampaignController {
 
     @GetMapping
     @PreAuthorize("permitAll()")
-    public List<Campaign> findAll() {
-        return service.findAll();
+    public List<Campaign> findAll(@RequestParam(required = false) String search) {
+        return service.findAll(search);
     }
 
     @GetMapping("/{id}")
