@@ -6,10 +6,20 @@ import { Campaign } from '../campaign';
 import { CampaignService } from '../campaign.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'app-campaign-list',
-  imports: [ButtonModule, CommonModule, InputTextModule, ReactiveFormsModule, NgOptimizedImage],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    InputTextModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    ReactiveFormsModule,
+    NgOptimizedImage,
+  ],
   templateUrl: './campaign-list.html',
   styleUrl: './campaign-list.scss',
 })
@@ -26,5 +36,4 @@ export class CampaignList {
   findCampaigns() {
     this.campaigns$ = this.campaignService.getCampaigns(this.searchText.value?.trim() || undefined);
   }
-
 }
