@@ -7,10 +7,14 @@ import { routes } from './app.routes';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { JWT_STORAGE_KEY } from './user/user.service';
+import localePt from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
 
 export function tokenGetter() {
   return localStorage.getItem(JWT_STORAGE_KEY);
 }
+
+registerLocaleData(localePt, 'pt');
 
 export const appConfig: ApplicationConfig = {
   providers: [
