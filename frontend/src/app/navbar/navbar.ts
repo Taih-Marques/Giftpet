@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 type Action = 'home' | 'about' | 'campaigns' | 'gift' | 'claim' | 'account' | 'donate';
@@ -19,6 +19,8 @@ interface NavbarAction {
 export class Navbar {
   constructor(private readonly router: Router) {}
 
+  protected isScrolled = false;
+
   protected readonly actions: NavbarAction[] = [
     { type: 'home', label: 'Início' },
     { type: 'about', label: 'Sobre nós' },
@@ -31,5 +33,10 @@ export class Navbar {
 
   protected onClick(action: Action): void {
     this.router.navigate([`/${action}`]);
+  }
+
+  @HostListener('window:scroll')
+  protected onWindowScroll(): void {
+    this.isScrolled = window.scrollY > 0;
   }
 }

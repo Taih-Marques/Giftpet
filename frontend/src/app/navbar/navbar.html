@@ -1,4 +1,8 @@
-<nav class="flex items-center justify-center gap-[19px] py-6 bg-primary">
+<nav
+  class="sticky top-0 z-50 flex items-center justify-center gap-[19px] bg-primary transition-[padding] duration-200"
+  [class.py-6]="!isScrolled"
+  [class.py-2]="isScrolled"
+>
   <img src="images/giftpet-logo.svg" alt="Giftpet logo"/>
   <ul class="flex items-center justify-center gap-[19px]">
     @for (action of actions; track action.type) {
