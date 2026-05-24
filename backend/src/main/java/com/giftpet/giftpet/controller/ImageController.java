@@ -1,5 +1,7 @@
 package com.giftpet.giftpet.controller;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,8 +28,7 @@ public class ImageController {
     public ResponseEntity<byte[]> getContent(@PathVariable @NonNull String id) {
         byte[] imageBytes = imageService.getImageBytes(id);
         HttpHeaders headers = new HttpHeaders();
-        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-
+        headers.setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).mustRevalidate().cachePublic().getHeaderValue());
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
 
