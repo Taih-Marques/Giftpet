@@ -1,13 +1,15 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DialogModule } from 'primeng/dialog';
 import { finalize } from 'rxjs';
 import { UserService } from '../user/user.service';
 import { ButtonModule } from 'primeng/button';
+import { IftaLabelModule } from 'primeng/iftalabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-login',
-  imports: [ButtonModule, DialogModule, ReactiveFormsModule],
+  imports: [ButtonModule, IftaLabelModule, InputTextModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -15,8 +17,8 @@ export class Login {
   private readonly formBuilder = inject(FormBuilder);
   private readonly userService = inject(UserService);
   private readonly cd = inject(ChangeDetectorRef);
+  private readonly dialogRef = inject(DynamicDialogRef);
 
-  protected visible = false;
   protected isSubmitting = false;
 
   protected readonly loginForm = this.formBuilder.nonNullable.group({
@@ -37,17 +39,13 @@ export class Login {
       .login(email, password)
       .pipe(finalize(() => {this.isSubmitting = false; this.cd.detectChanges();}))
       .subscribe({
-        next: () => {this.visible = false},
+        next: () => this.close(),
         error: () => {},
       });
   }
 
-  showDialog() {
-    this.visible = true;
-  }
-
   close() {
-    this.visible = false;
     this.loginForm.reset();
+    this.dialogRef.close();
   }
 }

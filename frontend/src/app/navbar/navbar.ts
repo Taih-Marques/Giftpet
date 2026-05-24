@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 type Action = 'home' | 'about' | 'campaigns' | 'gift' | 'claim' | 'account' | 'donate';
 type ActionColor = 'aquamarine' | 'peachy-maroney';
@@ -16,6 +17,8 @@ interface NavbarAction {
   styleUrl: './navbar.scss',
 })
 export class Navbar {
+  constructor(private readonly router: Router) {}
+
   protected readonly actions: NavbarAction[] = [
     { type: 'home', label: 'Início' },
     { type: 'about', label: 'Sobre nós' },
@@ -27,6 +30,6 @@ export class Navbar {
   ];
 
   protected onClick(action: Action): void {
-    console.log(action);
+    this.router.navigate([`/${action}`]);
   }
 }

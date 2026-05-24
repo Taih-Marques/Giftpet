@@ -1,15 +1,25 @@
-<p-button (click)="showDialog()" label="Entrar" />
-<p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
-  <ng-template #headless>
-    <div [style]="{ 'margin': '12px 24px 0 0', 'text-align': 'end'}">
-      <p-button icon="pi pi-times" aria-label="Close" (onClick)="close()" />
-    </div>
-      <section class="login-modal">
-        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()">
-          <input type="email" formControlName="email" placeholder="Email" />
-          <input type="password" formControlName="password" placeholder="Senha" />
-          <button type="submit" [disabled]="isSubmitting || loginForm.invalid">Login</button>
-        </form>
-      </section>
-  </ng-template>
-</p-dialog>
+<section class="flex w-full flex-col p-6">
+  <div class="my-3 grid grid-cols-[1fr_auto_1fr] items-center">
+    <span></span>
+    <img class="justify-self-center" src="images/giftpet-logo.svg" alt="Giftpet logo"/>
+    <p-button class="justify-self-end" icon="pi pi-times" aria-label="Close" (onClick)="close()" />
+  </div>
+  <form class="flex w-full flex-col gap-3" [formGroup]="loginForm" (ngSubmit)="submit()">
+    <p-iftalabel>
+        <label for="email">Email</label>
+        <input pInputText type="email" formControlName="email" placeholder="Email" class="w-full [--p-inputtext-background:transparent]" />
+      </p-iftalabel>
+      <p-iftalabel>
+        <label for="password">Senha</label>
+        <input pInputText type="password" formControlName="password" placeholder="Senha" class="w-full [--p-inputtext-background:transparent]" />
+      </p-iftalabel>
+    <p-button
+      class="w-full"
+      styleClass="w-full"
+      label="Entrar"
+      type="submit"
+      [disabled]="isSubmitting || loginForm.invalid"
+      size="large"
+    />
+  </form>
+</section>

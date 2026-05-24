@@ -23,7 +23,7 @@ export class UserService {
   private readonly http = inject(HttpClient);
 
   constructor() {
-    console.log('initialize user serice');
+    console.log('initialize user service');
     const jwt = localStorage.getItem(JWT_STORAGE_KEY);
     if (!jwt) {
       return;
