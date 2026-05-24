@@ -40,31 +40,33 @@ public class TestDataInitializer {
 
     public void createCampaigns() {
 
-        String campaignDescription = """
-            💔 Ajude o Thor a Voltar a Respirar sem Dor
+        String streetDogsImage = findAndConvertImage("caes-de-rua.jpg");
 
-            Olá, meu nome é Carolina, e venho pedir sua ajuda para o meu cachorro Thor, um vira-lata de 5 anos cheio de energia e amor.
-            Há algumas semanas, ele começou a ter dificuldade para respirar e ficou muito abatido. Depois de vários exames, descobrimos que ele tem um problema torácico grave, que está comprimindo o pulmão e dificultando a respiração.
+        var campaigns = List.of(
+            new Campaign(null, "Ração para cães resgatados",
+                "Campanha para comprar ração e alimentar cães resgatados das ruas durante o próximo mês.",
+                BigDecimal.valueOf(1800.00), LocalDate.of(2025, 11, 12), List.of(new Image(streetDogsImage))),
+            new Campaign(null, "Vacinação dos cães do abrigo",
+                "Ajude a garantir vacinas essenciais para cães acolhidos temporariamente antes da adoção.",
+                BigDecimal.valueOf(2450.00), LocalDate.of(2025, 11, 28), List.of(new Image(streetDogsImage))),
+            new Campaign(null, "Castração comunitária",
+                "Mutirão de castração para reduzir o abandono e melhorar a saúde dos cães em situação de rua.",
+                BigDecimal.valueOf(5200.00), LocalDate.of(2025, 12, 5), List.of(new Image(streetDogsImage))),
+            new Campaign(null, "Tratamento de ferimentos",
+                "Arrecadação para consultas, curativos, antibióticos e exames de cães encontrados feridos.",
+                BigDecimal.valueOf(3100.00), LocalDate.of(2025, 12, 18), List.of(new Image(streetDogsImage))),
+            new Campaign(null, "Construção de baias seguras",
+                "Compra de materiais para montar baias limpas, cobertas e seguras para cães recém-resgatados.",
+                BigDecimal.valueOf(6800.00), LocalDate.of(2026, 1, 10), List.of(new Image(streetDogsImage))),
+            new Campaign(null, "Lar temporário solidário",
+                "Apoio com ração, medicamentos e transporte para voluntários que oferecem lar temporário.",
+                BigDecimal.valueOf(2700.00), LocalDate.of(2026, 1, 22), List.of(new Image(streetDogsImage))),
+            new Campaign(null, "Feira de adoção responsável",
+                "Campanha para organizar uma feira de adoção com triagem veterinária, divulgação e estrutura básica.",
+                BigDecimal.valueOf(3900.00), LocalDate.of(2026, 2, 8), List.of(new Image(streetDogsImage)))
+        );
 
-            O veterinário explicou que o único tratamento possível é uma cirurgia torácica corretiva, orçada em R$ 2.000.
-            Infelizmente, essa quantia está além do que conseguimos arcar no momento — e cada dia é mais difícil ver o Thor sofrendo sem poder correr e brincar como antes.
-
-            Por isso, estamos pedindo sua ajuda 🙏
-            Qualquer contribuição, por menor que seja, fará uma enorme diferença para que o Thor possa fazer a cirurgia e voltar a ter qualidade de vida.
-
-            💰 Meta: R$ 2.000
-            🐾 Destino dos valores: cirurgia torácica, internação e medicamentos pós-operatórios
-            📅 Urgência: o procedimento precisa ser realizado nas próximas semanas
-
-            Thor é parte da nossa família, e ver ele assim parte o coração.
-            Com sua ajuda, acreditamos que ele logo estará de volta, correndo feliz pelo quintal. ❤️
-
-            Obrigado de coração a todos que puderem colaborar ou compartilhar.
-            """;
-
-        var images = List.of(new Image(findAndConvertImage("thor-campaign.png")));
-        var campaign = new Campaign(null, "Castração do Thor", campaignDescription, BigDecimal.valueOf(2059.44), LocalDate.of(2025, 12, 24), images);
-        campaignRepository.save(campaign);
+        campaignRepository.saveAll(campaigns);
     }
 
     public void createEvents() {
