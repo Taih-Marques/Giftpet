@@ -1,5 +1,5 @@
 <h1 class="mb-[60px] pl-[120px] pt-[60px] font-['Montserrat'] text-[60px] font-semibold uppercase">Campanhas</h1>
-<section class="flex flex-col items-center gap-4 px-[200px]">
+<section class="flex flex-col items-center gap-4 px-[200px] pb-[60px]">
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum pharetra tortor, ac viverra neque volutpat sed. Maecenas fermentum enim id eros viverra, sit amet venenatis sapien feugiat. Nulla posuere in libero fermentum lacinia. Suspendisse cursus bibendum eros, non
   </p>
@@ -12,16 +12,16 @@
   <div class="grid grid-cols-3 gap-4">
     @if (campaigns$ | async; as campaigns) {
       @for(campaign of campaigns; track campaign.id) {
-        <article class="flex flex-col items-center gap-3 rounded-lg bg-white p-[25px] shadow">
+        <article class="flex flex-col items-center gap-3 rounded-lg border border-phantom bg-white p-[25px] shadow">
+          <div [style]="{'position': 'relative', 'width': '300px', 'height': '200px'}">
           @if (campaign.images.length) {
-            <div [style]="{'position': 'relative', 'width': '300px', 'height': '200px'}">
               <img [ngSrc]="'/api/image/content/' + campaign.images[0].id" alt="Imagem principal da campanha" fill priority/>
-            </div>
-          } @else {
-            Esta campanha não tem imagens.
-          }
-          <p>{{campaign.name}}</p>
-          <p>{{campaign.goal | currency:'BRL':undefined:undefined:'pt-BR'}}</p>
+            } @else {
+              <img src="https://placehold.co/300x200" alt="Imagem de placeholder para campanhas sem imagem" fill priority/>
+            }
+          </div>
+          <p class="w-full text-left font-['Poppins'] text-[16px] text-primary">{{campaign.name}}</p>
+          <p class="w-full text-left font-['Poppins'] text-[16px] text-primary">{{campaign.goal | currency:'BRL':undefined:undefined:'pt-BR'}}</p>
         </article>
       }
     }
