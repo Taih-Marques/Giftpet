@@ -4,10 +4,11 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Login } from './login/login';
 import { Navbar } from './navbar/navbar';
+import { Footer } from "./footer/footer";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar],
+  imports: [RouterOutlet, Navbar, Footer],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   providers: [DialogService],
