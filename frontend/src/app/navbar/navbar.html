@@ -12,8 +12,8 @@
           class="cursor-pointer rounded-sm border-[4px] border-transparent p-[10px] font-['Poppins'] text-[14px] font-normal transition-colors hover:border-black/10 hover:text-white/80"
           [class.border-aquamarine]="action.color === 'aquamarine'"
           [class.text-aquamarine]="action.color === 'aquamarine'"
-          [class.bg-peachy-maroney]="action.color === 'peachy-maroney'"
-          [class.text-white]="action.color === 'peachy-maroney'"
+          [class.bg-peachy-maroney]="action.bgColor === 'peachy-maroney'"
+          [class.text-white]="!action.color"
           [class.uppercase]="action.type === 'donate'"
           (click)="onClick(action.type)"
         >

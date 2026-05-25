@@ -8,6 +8,7 @@ interface NavbarAction {
   type: Action;
   label: string;
   color?: ActionColor;
+  bgColor?: ActionColor;
 }
 
 @Component({
@@ -28,7 +29,7 @@ export class Navbar {
     { type: 'gift', label: 'Presentear' },
     { type: 'claim', label: 'Resgatar gift card' },
     { type: 'account', label: 'Minha conta', color: 'aquamarine' },
-    { type: 'donate', label: 'Doe agora', color: 'peachy-maroney' },
+    { type: 'donate', label: 'Doe agora', bgColor: 'peachy-maroney' },
   ];
 
   protected onClick(action: Action): void {
