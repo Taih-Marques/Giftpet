@@ -1,6 +1,7 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Campaign } from '../campaign';
 import { CampaignService } from '../campaign.service';
@@ -25,6 +26,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 })
 export class CampaignList {
   private readonly campaignService = inject(CampaignService);
+  private readonly router = inject(Router);
 
   protected campaigns$: Observable<Campaign[]>;
   protected searchText = new FormControl('');
@@ -35,5 +37,9 @@ export class CampaignList {
 
   findCampaigns() {
     this.campaigns$ = this.campaignService.getCampaigns(this.searchText.value?.trim() || undefined);
+  }
+
+  openEventForm(campaignId: number): void {
+    this.router.navigate(['/new-event'], { state: { campaignId } });
   }
 }

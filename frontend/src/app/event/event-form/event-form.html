@@ -1,0 +1,126 @@
+<section class="flex flex-col px-[360px] py-[40px] font-['Poppins']">
+  <p-toast />
+  <h1 class="mb-[20px] text-center font-['Montserrat'] text-[50px] font-medium uppercase">
+    Criar novo Evento
+  </h1>
+  <p class="text-[16px] text-center mb-[40px]">
+    Todos os dias, pessoas como você ajudam a escrever finais felizes. Com cada doação, um animal
+    recebe cuidado, uma família encontra um novo parceiro e uma ONG ganha fôlego. No GiftPet, você
+    acompanha tudo em tempo real, com transparência e afeto — do clique ao latido de gratidão.
+  </p>
+
+  <form class="flex flex-col gap-4" [formGroup]="eventForm" (ngSubmit)="createEvent()">
+    <p-iftalabel>
+      <label for="name">Nome do evento</label>
+      <input id="name" class="w-full" pInputText type="text" formControlName="name" required />
+    </p-iftalabel>
+
+    <p-iftalabel>
+      <label for="description">Descrição</label>
+      <textarea
+        id="description"
+        class="w-full"
+        pTextarea
+        formControlName="description"
+        maxlength="2000"
+        required
+      ></textarea>
+    </p-iftalabel>
+
+    <div class="w-full">
+      <p-button icon="pi pi-upload" aria-label="Escolher imagens" (onClick)="fileUpload.click()" label="Selecionar imagens" />
+      <input
+        #fileUpload
+        type="file"
+        hidden
+        accept="image/*"
+        multiple="true"
+        (change)="onImageSelected($event)"
+      />
+      <div class="mt-2 flex w-full flex-col gap-2">
+        @for (image of eventForm.value.images; track image.file.name) {
+          <div class="flex w-full items-center gap-3 rounded border border-gray-200 p-2">
+            <img
+              [src]="image.url"
+              alt="Imagem do evento"
+              class="h-20 w-20 shrink-0 rounded object-cover"
+            />
+            <span class="min-w-0 flex-1 truncate text-sm">{{ image.file.name }}</span>
+            <p-button
+              icon="pi pi-times"
+              aria-label="Remover imagem"
+              styleClass="p-button-text p-button-danger"
+              (onClick)="onImageRemoved(image)"
+            />
+          </div>
+        }
+      </div>
+    </div>
+
+    <p-iftalabel>
+      <p-select
+        inputId="campaign"
+        class="w-full"
+        formControlName="campaign"
+        [options]="campaigns"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Selecione uma campanha"
+        required
+      />
+      <label for="campaign">Campanha da ONG</label>
+    </p-iftalabel>
+
+    <p-iftalabel>
+      <p-inputnumber
+        inputId="goal"
+        class="w-full"
+        formControlName="goal"
+        mode="decimal"
+        [minFractionDigits]="2"
+        [maxFractionDigits]="2"
+        required
+      />
+      <label for="goal">Meta</label>
+    </p-iftalabel>
+
+    <p-iftalabel>
+      <p-datepicker inputId="date" formControlName="date" dateFormat="dd/mm/yy" required />
+      <label for="date">Data</label>
+    </p-iftalabel>
+
+    <p-iftalabel>
+      <p-inputnumber
+        inputId="giftCardQuantity"
+        class="w-full"
+        formControlName="giftCardQuantity"
+        [min]="0"
+        [showButtons]="true"
+        required
+      />
+      <label for="giftCardQuantity">Quantidade de Gift Cards</label>
+    </p-iftalabel>
+
+    <p-iftalabel>
+      <p-inputnumber
+        inputId="suggestedGiftCardValue"
+        class="w-full"
+        formControlName="suggestedGiftCardValue"
+        mode="decimal"
+        [minFractionDigits]="2"
+        [maxFractionDigits]="2"
+        required
+      />
+      <label for="suggestedGiftCardValue">Valor sugerido por Gift Card</label>
+    </p-iftalabel>
+
+    <p-button
+      [loading]="isSubmitting()"
+      [disabled]="eventForm.invalid"
+      class="self-center mt-[20px] font-bold [--p-button-padding-x:160px] [--p-button-padding-y:20px]"
+      styleClass="bg-primary"
+      label="Criar Evento e Gerar Gifts Cards"
+      type="submit"
+    />
+  </form>
+</section>
