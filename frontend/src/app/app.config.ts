@@ -1,4 +1,4 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -10,6 +10,8 @@ import { definePreset } from '@primeuix/themes';
 import { JWT_STORAGE_KEY } from './user/user.service';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { tokenExpiredInterceptor } from './core/token-expired.interceptor';
+import { DialogService } from 'primeng/dynamicdialog';
 
 export function tokenGetter() {
   return localStorage.getItem(JWT_STORAGE_KEY);
@@ -46,9 +48,10 @@ export const appConfig: ApplicationConfig = {
         },
       }),
     ),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptors([tokenExpiredInterceptor]), withInterceptorsFromDi()),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
+    DialogService,
     providePrimeNG({
       theme: {
         preset: GiftpetPreset,

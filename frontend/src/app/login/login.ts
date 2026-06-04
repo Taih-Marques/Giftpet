@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { finalize } from 'rxjs';
-import { UserService } from '../user/user.service';
 import { ButtonModule } from 'primeng/button';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { finalize } from 'rxjs';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +37,12 @@ export class Login {
     this.isSubmitting = true;
     this.userService
       .login(email, password)
-      .pipe(finalize(() => {this.isSubmitting = false; this.cd.detectChanges();}))
+      .pipe(
+        finalize(() => {
+          this.isSubmitting = false;
+          this.cd.detectChanges();
+        }),
+      )
       .subscribe({
         next: () => this.close(),
         error: () => {},
