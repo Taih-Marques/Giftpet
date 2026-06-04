@@ -57,4 +57,9 @@ public class Event {
     @JoinTable(name = "event_image", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "image_id"))
     @JsonIgnoreProperties("content")
     private List<Image> images;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "event_giftcard", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "giftcard_id"))
+    @JsonIgnoreProperties("event")
+    private List<GiftCard> giftCards;
 }

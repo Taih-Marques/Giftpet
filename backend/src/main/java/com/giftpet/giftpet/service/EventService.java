@@ -23,6 +23,7 @@ public class EventService {
     private final CampaignService campaignService;
     private final EventRepository repository;
     private final ImageService imageService;
+    private final GiftCardService giftCardService;
 
     public List<Event> findAll(String search) {
         if (search != null && !search.trim().isEmpty()) {
@@ -45,9 +46,8 @@ public class EventService {
         event.setCampaign(campaignService.findById(newEvent.campaignId()));
         List<Image> savedImages = imageService.saveAll(images);
         event.setImages(savedImages);
-
-        // TODO: Implementar geração de giftcards
-        // generateGiftCardsForEvent(event, newEvent.giftCardQuantity(), newEvent.suggestedGiftCardValue());
+        event.setGiftCards(giftCardService.generateGiftCards(newEvent.giftCardQuantity(), newEvent.suggestedGiftCardValue()));
+        event.getGiftCards().forEach(giftCard -> giftCard.setEvent(event));
 
         return repository.save(event);
     }

@@ -20,4 +20,9 @@ public class ApiExceptionHandler {
 
         return ResponseEntity.badRequest().body(Map.of("message", message));
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
+    }
 }
