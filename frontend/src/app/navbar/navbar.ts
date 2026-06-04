@@ -13,6 +13,7 @@ interface NavbarAction {
 
 @Component({
   selector: 'app-navbar',
+  host: { class: 'sticky top-0 z-50 block' },
   imports: [],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',

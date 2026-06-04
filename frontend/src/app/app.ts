@@ -8,6 +8,7 @@ import { Footer } from "./footer/footer";
 
 @Component({
   selector: 'app-root',
+  host: { class: 'flex min-h-screen flex-col' },
   imports: [RouterOutlet, Navbar, Footer],
   templateUrl: './app.html',
   styleUrl: './app.scss',
