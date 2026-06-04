@@ -80,7 +80,6 @@ public class TestDataInitializer {
             "Feira de Adoção",
             campaign,
             "Feira para adoção de animais resgatados.",
-            30,
             BigDecimal.valueOf(500.00),
             LocalDate.of(2024, 11, 10),
             List.of(new Image(findAndConvertImage("caes-de-rua.jpg")))

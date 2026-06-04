@@ -34,7 +34,9 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
     @NotBlank
+    @Size(max = 250)
     private String name;
 
     @JoinColumn(name = "campaign_id", referencedColumnName = "id", nullable = false)
@@ -44,9 +46,6 @@ public class Event {
     @NotBlank
     @Size(max = 2000)
     private String description;
-
-    @NotNull
-    private Integer giftCount;
 
     @NotNull
     private BigDecimal goal;
