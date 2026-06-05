@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './home/home';
 import { CampaignList } from './campaign/campaign-list/campaign-list';
 import { EventForm } from './event/event-form/event-form';
+import { EventDetailsComponent } from './event/event-details/event-details';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,10 @@ export const routes: Routes = [
   {
     path: 'new-event',
     component: EventForm,
+  },
+  {
+    path: 'event/:id',
+    component: EventDetailsComponent,
   },
   {
     path: '**',

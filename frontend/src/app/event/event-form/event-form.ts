@@ -15,6 +15,7 @@ import { CampaignService } from '../../campaign/campaign.service';
 import { EventService } from '../event.service';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface SelectedImage {
   file: File;
@@ -54,10 +55,12 @@ export class EventForm implements OnInit {
   private readonly campaignService = inject(CampaignService);
   private readonly eventService = inject(EventService);
   private readonly messageService = inject(MessageService);
+  private readonly router = inject(Router);
 
+  // TODO usar signal
   protected campaigns: Campaign[] = [];
 
-  protected fileUploadHeaders = new HttpHeaders().append('Content-Type', `multipart/form-data`);
+  // TODO adicionar validação de tamanho dos arquivos
   protected maxFileSize = 10485760;
 
   protected isSubmitting = signal(false);
@@ -115,9 +118,10 @@ export class EventForm implements OnInit {
         })
       )
       .subscribe({
-        next: () => {
+        next: (response) => {
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Evento criado com sucesso!' });
           this.eventForm.reset();
+          this.router.navigate(['/event', response.id]);
         },
         error: () => {
           this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu um erro ao criar o evento. Por favor, tente novamente.' });
