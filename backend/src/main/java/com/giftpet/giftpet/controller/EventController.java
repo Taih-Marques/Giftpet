@@ -1,8 +1,10 @@
 package com.giftpet.giftpet.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +43,13 @@ public class EventController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("isAuthenticated()")
-    public Event createEvent(@RequestPart("event") NewEvent event, @RequestPart(value = "images") List<MultipartFile> images) {
-        return service.createEvent(event, images);
+    public ResponseEntity<CreateEventResponse> createEvent(@RequestPart("event") NewEvent event,
+            @RequestPart(value = "images") List<MultipartFile> images) {
+        Event createdEvent = service.createEvent(event, images);
+        URI location = URI.create("/event/" + createdEvent.getId());
+
+        return ResponseEntity.created(location).body(new CreateEventResponse(createdEvent.getId()));
     }
+
+    private record CreateEventResponse(Integer id) {}
 }

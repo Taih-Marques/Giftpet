@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -41,6 +43,7 @@ public class Event {
 
     @JoinColumn(name = "campaign_id", referencedColumnName = "id", nullable = false)
     @ManyToOne
+    @JsonIncludeProperties({"id", "name"})
     private Campaign campaign;
 
     @NotBlank
@@ -55,7 +58,7 @@ public class Event {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "event_image", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "image_id"))
-    @JsonIgnoreProperties("content")
+    @JsonIncludeProperties("id")
     private List<Image> images;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
