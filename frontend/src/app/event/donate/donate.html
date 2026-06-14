@@ -1,0 +1,51 @@
+<header class="grid grid-cols-[1fr_auto_1fr] items-center border-b-4 border-scandal px-6 py-4">
+  <span aria-hidden="true"></span>
+
+  <h2 class="text-center font-['Poppins'] text-[16px]">Detalhes do pagamento</h2>
+
+  <button
+    type="button"
+    class="justify-self-end p-2"
+    aria-label="Fechar detalhes do pagamento"
+    (click)="close()"
+  >
+    <i class="pi pi-times" aria-hidden="true"></i>
+  </button>
+</header>
+
+<main class="flex flex-col px-[40px] py-[40px]">
+  <h1 class="mb-[30px] font-['Montserrat'] text-center text-[32px] font-semibold uppercase">
+    {{ eventName }}
+  </h1>
+
+  <form
+    class="flex w-full flex-col gap-6 lg:w-[500px]"
+    [formGroup]="donationForm"
+    (ngSubmit)="nextStep()"
+  >
+    <p-iftalabel>
+      <label for="full-name">Nome completo</label>
+      <input id="full-name" type="text" pInputText formControlName="fullName" class="w-full" />
+    </p-iftalabel>
+
+    <p-iftalabel>
+      <label for="email">Email</label>
+      <input id="email" type="email" pInputText formControlName="email" class="w-full" />
+    </p-iftalabel>
+
+    <p-iftalabel>
+      <label for="cpf">CPF</label>
+      <input id="cpf" type="text" pInputText pInputMask="999.999.999-99" formControlName="cpf" class="w-full" />
+    </p-iftalabel>
+
+    <p-iftalabel>
+      <p-inputnumber inputId="donation-amount" formControlName="amount" inputId="currency-us" mode="currency" currency="BRL" locale="pt-BR" />
+      <label for="donation-amount">Quanto você deseja doar hoje?</label>
+    </p-iftalabel>
+
+    <div class="flex items-center justify-between">
+      <p-button type="button" label="Cancelar" severity="secondary" (onClick)="close()" />
+      <p-button type="submit" label="Próximo" />
+    </div>
+  </form>
+</main>

@@ -1,4 +1,5 @@
 @if (event()) {
+  <p-toast />
   <section class="flex w-full px-[240px] py-[40px]" aria-labelledby="event-title">
     <div class="w-full lg:w-1/3">
       <div class="mb-[20px] overflow-hidden border border-slate-200 shadow-sm">
@@ -39,11 +40,15 @@
         {{ event()?.description }}
       </p>
 
-      <form class="grid w-full max-w-[540px] grid-cols-[auto_1fr] items-center gap-[12px]">
+      <form
+        class="grid w-full max-w-[540px] grid-cols-[auto_1fr] items-center gap-[12px]"
+        (submit)="$event.preventDefault(); donate(giftCardCode.value)"
+      >
         <label for="gift-card-code" class="font-['Poppins'] text-[14px] text-slate-700">
           Resgatar Gift Card
         </label>
         <input
+          #giftCardCode
           id="gift-card-code"
           name="giftCardCode"
           pInputText
@@ -53,7 +58,7 @@
         />
 
         <p-button
-          type="button"
+          type="submit"
           label="DOAR AGORA"
           class="col-span-2 justify-self-end rounded-[24px] text-base font-semibold"
         ></p-button>

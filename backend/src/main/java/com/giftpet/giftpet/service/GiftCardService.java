@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.giftpet.giftpet.model.GiftCard;
 import com.giftpet.giftpet.repository.GiftCardRepository;
+import com.giftpet.giftpet.repository.specification.GiftCardSpecs;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +25,13 @@ public class GiftCardService {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     private final GiftCardRepository giftCardRepository;
+
+    public void validateCard(String code) {
+        boolean isValid = giftCardRepository.exists(GiftCardSpecs.isValid(code));
+        if (!isValid) {
+            throw new IllegalArgumentException("Código inválido.");
+        }
+    }
 
     public List<GiftCard> generateGiftCards(Integer quantity, BigDecimal suggestedAmount) {
         if (quantity == null || quantity <= 0) {

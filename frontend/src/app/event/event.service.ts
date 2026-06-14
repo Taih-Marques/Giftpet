@@ -27,6 +27,10 @@ export class EventService {
   findById(id: number): Observable<Event> {
     return this.http.get<Event>(`${this.baseUrl}/${id}`);
   }
+
+  validateGiftCard(giftCardCode: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/validate-giftcard`, { code:giftCardCode });
+  }
 }
 
 interface NewEventRequest {

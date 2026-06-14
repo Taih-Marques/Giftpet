@@ -10,14 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.giftpet.giftpet.controller.dto.NewEvent;
+import com.giftpet.giftpet.controller.dto.ValidateGiftCard;
 import com.giftpet.giftpet.model.Event;
 import com.giftpet.giftpet.service.EventService;
+import com.giftpet.giftpet.service.GiftCardService;
 
 import lombok.AllArgsConstructor;
 
@@ -28,6 +31,7 @@ import lombok.AllArgsConstructor;
 public class EventController {
 
     private final EventService service;
+    private final GiftCardService giftCardService;
 
     @GetMapping
     @PreAuthorize("permitAll()")
@@ -39,6 +43,13 @@ public class EventController {
     @PreAuthorize("permitAll()")
     public Event findById(@PathVariable int id) {
         return service.findById(id);
+    }
+
+    @PostMapping("/validate-giftcard")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<Void> validateGiftCard(@RequestBody ValidateGiftCard giftCard) {
+        giftCardService.validateCard(giftCard.code());
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
