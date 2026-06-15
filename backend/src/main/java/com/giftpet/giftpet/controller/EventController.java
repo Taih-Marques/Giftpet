@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.giftpet.giftpet.controller.dto.EventDetail;
 import com.giftpet.giftpet.controller.dto.NewEvent;
 import com.giftpet.giftpet.controller.dto.ValidateGiftCard;
 import com.giftpet.giftpet.model.Event;
@@ -41,14 +42,14 @@ public class EventController {
 
     @GetMapping("/{id}")
     @PreAuthorize("permitAll()")
-    public Event findById(@PathVariable int id) {
-        return service.findById(id);
+    public EventDetail findById(@PathVariable int id) {
+        return service.findDetail(id);
     }
 
     @PostMapping("/validate-giftcard")
     @PreAuthorize("permitAll()")
     public ResponseEntity<Void> validateGiftCard(@RequestBody ValidateGiftCard giftCard) {
-        giftCardService.validateCard(giftCard.code());
+        giftCardService.validateCard(giftCard);
         return ResponseEntity.ok().build();
     }
 

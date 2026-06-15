@@ -21,7 +21,7 @@
   <form
     class="flex w-full flex-col gap-6 lg:w-[500px]"
     [formGroup]="donationForm"
-    (ngSubmit)="nextStep()"
+    (ngSubmit)="donate()"
   >
     <p-iftalabel>
       <label for="full-name">Nome completo</label>
@@ -35,17 +35,37 @@
 
     <p-iftalabel>
       <label for="cpf">CPF</label>
-      <input id="cpf" type="text" pInputText pInputMask="999.999.999-99" formControlName="cpf" class="w-full" />
+      <input
+        id="cpf"
+        type="text"
+        pInputText
+        pInputMask="999.999.999-99"
+        formControlName="cpf"
+        class="w-full"
+      />
     </p-iftalabel>
 
     <p-iftalabel>
-      <p-inputnumber inputId="donation-amount" formControlName="amount" inputId="currency-us" mode="currency" currency="BRL" locale="pt-BR" />
+      <p-inputnumber
+        inputId="donation-amount"
+        formControlName="amount"
+        mode="currency"
+        currency="BRL"
+        locale="pt-BR"
+      />
       <label for="donation-amount">Quanto você deseja doar hoje?</label>
     </p-iftalabel>
 
+    @if (testMode) {
+      <p-message severity="warn" icon="pi-info"
+        >O modo de teste está ativado. Enquanto estiver no modo de teste, nenhuma doação ao vivo
+        será processada.</p-message
+      >
+    }
+
     <div class="flex items-center justify-between">
       <p-button type="button" label="Cancelar" severity="secondary" (onClick)="close()" />
-      <p-button type="submit" label="Próximo" />
+      <p-button type="submit" label="Doar" [disabled]="isSubmitting() || donationForm.invalid" />
     </div>
   </form>
 </main>

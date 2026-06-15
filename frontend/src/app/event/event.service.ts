@@ -28,8 +28,8 @@ export class EventService {
     return this.http.get<Event>(`${this.baseUrl}/${id}`);
   }
 
-  validateGiftCard(giftCardCode: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/validate-giftcard`, { code:giftCardCode });
+  validateGiftCard(giftCardCode: string, eventId: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/validate-giftcard`, { code:giftCardCode, eventId });
   }
 }
 

@@ -2,6 +2,7 @@ package com.giftpet.giftpet.service;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
+import com.giftpet.giftpet.controller.dto.ValidateGiftCard;
 import com.giftpet.giftpet.model.GiftCard;
 import com.giftpet.giftpet.repository.GiftCardRepository;
 import com.giftpet.giftpet.repository.specification.GiftCardSpecs;
@@ -26,11 +28,16 @@ public class GiftCardService {
 
     private final GiftCardRepository giftCardRepository;
 
-    public void validateCard(String code) {
-        boolean isValid = giftCardRepository.exists(GiftCardSpecs.isValid(code));
+    public void validateCard(ValidateGiftCard giftCard) {
+        boolean isValid = giftCardRepository.exists(GiftCardSpecs.isValid(giftCard.code(), giftCard.eventId()));
         if (!isValid) {
             throw new IllegalArgumentException("Código inválido.");
         }
+    }
+
+    public GiftCard findByCode(String code) {
+        return giftCardRepository.findById(code)
+                .orElseThrow(() -> new IllegalArgumentException("GiftCard not found. Code: " + code));
     }
 
     public List<GiftCard> generateGiftCards(Integer quantity, BigDecimal suggestedAmount) {
@@ -79,5 +86,10 @@ public class GiftCardService {
 
         // format as groups like XXXX-XXXX-XXXX
         return base.replaceAll("(.{" + blockLength + "})", "$1-").replaceAll("-$", "");
+    }
+
+    public GiftCard redeem(GiftCard giftCard) {
+        giftCard.setDateUsed(LocalDateTime.now());
+        return giftCardRepository.save(giftCard);
     }
 }

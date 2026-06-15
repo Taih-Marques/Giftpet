@@ -63,6 +63,6 @@ public class Event {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "event_giftcard", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "giftcard_id"))
-    @JsonIgnoreProperties("event")
+    @JsonIgnore
     private List<GiftCard> giftCards;
 }

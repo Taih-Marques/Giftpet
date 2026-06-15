@@ -17,14 +17,19 @@
         [circular]="true"
         [showIndicators]="false"
       >
-        <ng-template pTemplate="item" let-image let-i="index">
-          <div class="overflow-hidden border border-slate-200 shadow-sm">
+        <ng-template pTemplate="item" let-image>
+          <button
+            type="button"
+            class="block overflow-hidden border border-slate-200 shadow-sm"
+            aria-label="Selecionar imagem do evento"
+            (click)="selectImage(image)"
+          >
             <img
               [src]="image"
-              alt="Imagem do evento {{ i + 1 }}"
+              alt="Miniatura do evento"
               class="h-[70px] object-cover transition duration-200 hover:scale-105"
             />
-          </div>
+          </button>
         </ng-template>
       </p-carousel>
     </div>
@@ -42,7 +47,7 @@
 
       <form
         class="grid w-full max-w-[540px] grid-cols-[auto_1fr] items-center gap-[12px]"
-        (submit)="$event.preventDefault(); donate(giftCardCode.value)"
+        (submit)="$event.preventDefault(); donate()"
       >
         <label for="gift-card-code" class="font-['Poppins'] text-[14px] text-slate-700">
           Resgatar Gift Card
@@ -61,6 +66,7 @@
           type="submit"
           label="DOAR AGORA"
           class="col-span-2 justify-self-end rounded-[24px] text-base font-semibold"
+          [disabled]="isDonating()"
         ></p-button>
       </form>
     </div>
