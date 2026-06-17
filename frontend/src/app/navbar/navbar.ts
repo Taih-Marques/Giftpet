@@ -1,5 +1,6 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from '../login/login.service';
 
 type Action = 'home' | 'about' | 'campaigns' | 'gift' | 'claim' | 'account' | 'donate';
 type ActionColor = 'aquamarine' | 'peachy-maroney';
@@ -19,7 +20,8 @@ interface NavbarAction {
   styleUrl: './navbar.scss',
 })
 export class Navbar {
-  constructor(private readonly router: Router) {}
+  private readonly router = inject(Router);
+  private readonly loginService = inject(LoginService);
 
   protected isScrolled = false;
 
@@ -34,6 +36,10 @@ export class Navbar {
   ];
 
   protected onClick(action: Action): void {
+    if (action === 'account') {
+      this.loginService.open();
+      return;
+    }
     this.router.navigate([`/${action}`]);
   }
 
