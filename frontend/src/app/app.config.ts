@@ -1,6 +1,6 @@
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import { routes } from './app.routes';
@@ -50,7 +50,12 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withInterceptors([tokenExpiredInterceptor]), withInterceptorsFromDi()),
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top',
+      }),
+    ),
     DialogService,
     providePrimeNG({
       theme: {
