@@ -1,0 +1,31 @@
+<h1 class="mb-[60px] pl-[120px] pt-[60px] font-['Montserrat'] text-[60px] font-semibold uppercase">Eventos</h1>
+<section class="flex flex-col items-center gap-4 px-[200px] pb-[60px]">
+  <p>
+    Conheca os eventos ativos da Gift Pet e acompanhe campanhas transparentes criadas para ajudar animais que precisam de cuidado.<br>
+  </p>
+
+  <div class="grid grid-cols-3 gap-4">
+    @if (events$ | async; as events) {
+      @for(event of events; track event.id) {
+        <article
+          class="flex cursor-pointer flex-col items-center gap-3 rounded-lg border border-phantom bg-white p-[25px] shadow"
+          role="link"
+          tabindex="0"
+          (click)="openEventDetails(event.id)"
+          (keyup.enter)="openEventDetails(event.id)"
+        >
+          <div [style]="{'position': 'relative', 'width': '300px', 'height': '200px'}">
+            @if (event.images?.length) {
+              <img [ngSrc]="'/api/image/content/' + event.images[0].id" alt="Imagem principal do evento" fill priority/>
+            } @else {
+              <img ngSrc="https://placehold.co/300x200" alt="Imagem de placeholder para eventos sem imagem" fill priority/>
+            }
+          </div>
+          <p class="w-full text-left font-['Poppins'] text-[16px] text-primary">{{event.name}}</p>
+          <p class="w-full text-left font-['Poppins'] text-[16px] text-primary">{{event.goal | currency:'BRL':undefined:undefined:'pt-BR'}}</p>
+          <p class="w-full text-left font-['Poppins'] text-[14px] text-primary">{{event.date | date:'dd/MM/yyyy'}}</p>
+        </article>
+      }
+    }
+  </div>
+</section>

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Event } from './event';
 import { Observable } from 'rxjs';
 
@@ -10,6 +10,14 @@ import { Observable } from 'rxjs';
 export class EventService {
   private readonly baseUrl = `${environment.apiHost}/event`;
   private readonly http = inject(HttpClient);
+
+  getEvents(searchText?: string): Observable<Event[]> {
+    let params = new HttpParams();
+    if (searchText?.trim().length) {
+      params = params.append('search', searchText);
+    }
+    return this.http.get<Event[]>(this.baseUrl, { params });
+  }
 
   createEvent(eventData: NewEventRequest): Observable<NewEventResponse> {
     const formData = new FormData();
