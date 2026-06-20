@@ -46,6 +46,7 @@ public class DonationService {
         donation.setEvent(event);
         donation.setDonorName(request.fullName());
         donation.setDonorEmail(request.email());
+        donation.setDonorNumber(request.phoneNumber());
         donation.setDonorCPF(request.cpf());
         donation.setAmount(request.amount());
         donation.setTransactionId("SIM-" + UUID.randomUUID());

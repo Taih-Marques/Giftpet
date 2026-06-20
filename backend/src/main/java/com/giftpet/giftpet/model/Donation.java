@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,6 +39,10 @@ public class Donation {
     @NotBlank
     @Email
     private String donorEmail;
+
+    @NotBlank
+    @Pattern(regexp = "^(?:(?:\\+|00)?(55)\\s?)?(?:(?:((\\d{2}))|\\d{2})\\s?)?(?:((?:9\\d|[2-9])\\d{3})-?(\\d{4}))$")
+    private String donorNumber;
 
     @NotNull
     @Positive

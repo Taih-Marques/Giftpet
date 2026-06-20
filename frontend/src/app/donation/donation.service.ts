@@ -19,6 +19,7 @@ interface SimulatedDonation {
   fullName: string;
   email: string;
   cpf: string;
+  phoneNumber: string;
   amount: number;
   eventId: number;
   giftCardCode: string;

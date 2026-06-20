@@ -29,6 +29,9 @@ import { DonationService } from '../../donation/donation.service';
   providers: [MessageService],
 })
 export class Donate {
+  private static readonly PHONE_NUMBER_PATTERN =
+    /^(?:(?:\+|00)?(55)\s?)?(?:(?:((\d{2}))|\d{2})\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/;
+
   private readonly dialogRef = inject(DynamicDialogRef);
   private readonly dialogConfig = inject(DynamicDialogConfig);
   private readonly donationService = inject(DonationService);
@@ -48,6 +51,10 @@ export class Donate {
     cpf: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, cpfValidator()],
+    }),
+    phoneNumber: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.pattern(Donate.PHONE_NUMBER_PATTERN)],
     }),
     amount: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
     eventId: new FormControl<number | undefined>(this.dialogConfig.data?.eventId, [
@@ -84,10 +91,11 @@ export class Donate {
       .simulateDonation({
         fullName: formValue.fullName || '',
         cpf: formValue.cpf || '',
+        phoneNumber: formValue.phoneNumber || '',
         email: formValue.email || '',
         amount: formValue.amount || 0,
         eventId: formValue.eventId || 0,
-        giftCardCode: formValue.giftCardCode || ''
+        giftCardCode: formValue.giftCardCode || '',
       })
       .pipe(
         finalize(() => {

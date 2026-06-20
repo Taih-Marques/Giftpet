@@ -22,6 +22,10 @@ public record SimulatedDonation(
         @CPF(message = "O CPF informado é inválido.")
         String cpf,
 
+        @NotBlank(message = "O número é obrigatório.")
+        @Pattern(regexp = "^(?:(?:\\+|00)?(55)\\s?)?(?:(?:((\\d{2}))|\\d{2})\\s?)?(?:((?:9\\d|[2-9])\\d{3})-?(\\d{4}))$", message = "O número é inválido.")
+        String phoneNumber,
+
         @NotNull(message = "O valor da doação é obrigatório.")
         @Positive(message = "O valor da doação deve ser maior que zero.")
         BigDecimal amount,

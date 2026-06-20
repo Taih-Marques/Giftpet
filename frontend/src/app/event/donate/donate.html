@@ -46,6 +46,17 @@
     </p-iftalabel>
 
     <p-iftalabel>
+      <p-inputmask
+        inputId="phone-number"
+        mask="(99) 9 9999-9999"
+        [unmask]="true"
+        formControlName="phoneNumber"
+        styleClass="w-full"
+      />
+      <label for="phone-number">Telefone</label>
+    </p-iftalabel>
+
+    <p-iftalabel>
       <p-inputnumber
         inputId="donation-amount"
         formControlName="amount"
