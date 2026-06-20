@@ -2,7 +2,7 @@ import { Component, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../login/login.service';
 
-type Action = 'home' | 'about' | 'campaigns' | 'gift' | 'claim' | 'account' | 'donate';
+type Action = 'home' | 'about' | 'campaigns' | 'events' | 'claim' | 'account' | 'donate';
 type ActionColor = 'aquamarine' | 'peachy-maroney';
 
 interface NavbarAction {
@@ -29,7 +29,7 @@ export class Navbar {
     { type: 'home', label: 'Início' },
     { type: 'about', label: 'Sobre nós' },
     { type: 'campaigns', label: 'Campanhas ativas' },
-    { type: 'gift', label: 'Presentear' },
+    { type: 'events', label: 'Presentear' },
     { type: 'claim', label: 'Resgatar gift card' },
     { type: 'account', label: 'Minha conta', color: 'aquamarine' },
     { type: 'donate', label: 'Doe agora', bgColor: 'peachy-maroney' },
