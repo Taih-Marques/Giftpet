@@ -15,6 +15,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { EventService } from '../event.service';
 import { Event } from '../event';
@@ -25,7 +26,7 @@ import { finalize } from 'rxjs';
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  imports: [CommonModule, CarouselModule, InputTextModule, ButtonModule, ToastModule],
+  imports: [CommonModule, CarouselModule, InputTextModule, ButtonModule, TagModule, ToastModule],
   providers: [MessageService, DialogService],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
@@ -139,6 +140,25 @@ export class EventDetailsComponent implements OnInit {
         this.isDonating.set(false);
       },
     });
+  }
+
+  protected copyGiftCardCode(code: string): void {
+    navigator.clipboard.writeText(code).then(
+      () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Copiado',
+          detail: 'Código do Gift Card copiado.',
+        });
+      },
+      () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível copiar o código.',
+        });
+      },
+    );
   }
 
   private showGiftCardError(detail?: string): void {

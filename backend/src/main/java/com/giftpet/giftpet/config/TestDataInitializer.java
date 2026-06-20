@@ -3,6 +3,7 @@ package com.giftpet.giftpet.config;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +17,7 @@ import com.giftpet.giftpet.model.Event;
 import com.giftpet.giftpet.model.Image;
 import com.giftpet.giftpet.repository.CampaignRepository;
 import com.giftpet.giftpet.repository.EventRepository;
+import com.giftpet.giftpet.repository.UserRepository;
 import com.giftpet.giftpet.service.GiftCardService;
 import com.giftpet.giftpet.service.UserService;
 
@@ -28,6 +30,7 @@ public class TestDataInitializer {
     private UserService userService;
     private CampaignRepository campaignRepository;
     private EventRepository eventRepository;
+    private UserRepository userRepository;
     private GiftCardService giftCardService;
 
     @PostConstruct
@@ -79,22 +82,24 @@ public class TestDataInitializer {
         if (campaignOpt.isEmpty())
             return;
         var campaign = campaignOpt.get();
+        var owner = userRepository.findByEmail("admin@giftpet.org")
+                .orElseThrow(() -> new IllegalStateException("Admin user not found"));
 
         var event1Cards = giftCardService.generateGiftCards(5, BigDecimal.valueOf(30.00));
-        var event1 = new Event(null, "Feira de Adoção", campaign, "Feira para adoção de animais resgatados.",
+        var event1 = new Event(null, "Feira de Adoção", campaign, owner, "Feira para adoção de animais resgatados.",
                 BigDecimal.valueOf(500.00), LocalDate.now(),
                 loadImages("caes-de-rua.jpg"), event1Cards);
         // Keep the bidirectional relation consistent before saving.
         event1Cards.forEach(giftCard -> giftCard.setEvent(event1));
 
         var event2Cards = giftCardService.generateGiftCards(5, BigDecimal.valueOf(12.00));
-        var event2 = new Event(null, "Campanha de Vacinação", campaign, "Vacinação gratuita para cães resgatados.",
+        var event2 = new Event(null, "Campanha de Vacinação", campaign, owner, "Vacinação gratuita para cães resgatados.",
                 BigDecimal.valueOf(800.00), LocalDate.now().plusDays(10),
-                loadImages("caes-de-rua.jpg"), event2Cards);
+                loadImages("caes-de-rua.jpg","thor-campaign.png"), event2Cards);
         event2Cards.forEach(giftCard -> giftCard.setEvent(event2));
         
         var event3Cards = giftCardService.generateGiftCards(5, BigDecimal.valueOf(20.00));
-        var event3 = new Event(null, "Arrecadação de Ração", campaign, "Arrecadação de ração para cães resgatados.",
+        var event3 = new Event(null, "Arrecadação de Ração", campaign, owner, "Arrecadação de ração para cães resgatados.",
                 BigDecimal.valueOf(300.00), LocalDate.now().plusDays(20),
                 loadImages("caes-de-rua.jpg"), event3Cards);
         event3Cards.forEach(giftCard -> giftCard.setEvent(event3));
@@ -102,12 +107,9 @@ public class TestDataInitializer {
         eventRepository.saveAll(List.of(event1, event2, event3));
     }
 
-    private List<Image> loadImages(String filename) {
-        return loadImages(List.of(filename));
-    }
 
-    private List<Image> loadImages(List<String> filenames) {
-        return filenames.stream()
+    private List<Image> loadImages(String... filenames) {
+        return Arrays.stream(filenames)
                 .map(this::findAndConvertImage)
                 .filter(Objects::nonNull)
                 .map(Image::new)

@@ -72,66 +72,87 @@
     </div>
   </section>
   <section class="px-[240px] grid sm:grid-cols-2 xl:grid-cols-5" aria-label="Resumo do evento">
-      <div
-        class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white"
-      >
-        <img src="images/icons/gift-open.svg" height="70" width="70" aria-hidden="true" />
-        <div>
-          <div class="font-['Poppins'] text-[14px] text-slate-500">Total Arrecadado</div>
-          <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
-            {{ (event()?.amountRaised || 0) | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
-          </div>
+    <div class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white">
+      <img src="images/icons/gift-open.svg" height="70" width="70" aria-hidden="true" />
+      <div>
+        <div class="font-['Poppins'] text-[14px] text-slate-500">Total Arrecadado</div>
+        <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
+          {{ event()?.amountRaised || 0 | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
         </div>
       </div>
+    </div>
 
-      <div
-        class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white"
-      >
-        <img src="images/icons/stats.svg" height="70" width="70" aria-hidden="true" />
-        <div>
-          <div class="font-['Poppins'] text-[14px] text-slate-500">Meta de Arrecadação</div>
-          <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
-            {{ (event()?.goal || 0) | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
-          </div>
+    <div class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white">
+      <img src="images/icons/stats.svg" height="70" width="70" aria-hidden="true" />
+      <div>
+        <div class="font-['Poppins'] text-[14px] text-slate-500">Meta de Arrecadação</div>
+        <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
+          {{ event()?.goal || 0 | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
         </div>
       </div>
+    </div>
 
-      <div
-        class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white"
-      >
-        <img src="images/icons/megaphone.svg" height="70" width="70" aria-hidden="true" />
-        <div>
-          <div class="font-['Poppins'] text-[14px] text-slate-500">GiftCards Usados</div>
-          <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
-            {{ event()?.claimedCards || 0 }} / {{ event()?.totalCards || '?' }}
-          </div>
+    <div class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white">
+      <img src="images/icons/megaphone.svg" height="70" width="70" aria-hidden="true" />
+      <div>
+        <div class="font-['Poppins'] text-[14px] text-slate-500">GiftCards Usados</div>
+        <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
+          {{ event()?.claimedCards || 0 }} / {{ event()?.totalCards || '?' }}
         </div>
       </div>
+    </div>
 
-      <div
-        class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white"
-      >
-        <img src="images/icons/gift.svg" height="70" width="70" aria-hidden="true" />
-        <div>
-          <div class="font-['Poppins'] text-[14px] text-slate-500">Campanha Vinculada</div>
-          <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
-            {{ event()?.campaign?.name }}
-          </div>
+    <div class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white">
+      <img src="images/icons/gift.svg" height="70" width="70" aria-hidden="true" />
+      <div>
+        <div class="font-['Poppins'] text-[14px] text-slate-500">Campanha Vinculada</div>
+        <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
+          {{ event()?.campaign?.name }}
         </div>
       </div>
+    </div>
 
-      <div
-        class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white"
-      >
-        <img src="images/icons/calendar.svg" height="70" width="70" aria-hidden="true" />
-        <div>
-          <div class="font-['Poppins'] text-[14px] text-slate-500">Data do Evento</div>
-          <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
-            {{ event()?.date | date: 'dd/MM/yyyy' }}
-          </div>
+    <div class="flex h-[100px] items-center rounded-[32px] border border-slate-200 bg-white">
+      <img src="images/icons/calendar.svg" height="70" width="70" aria-hidden="true" />
+      <div>
+        <div class="font-['Poppins'] text-[14px] text-slate-500">Data do Evento</div>
+        <div class="font-['Poppins'] text-[16px] font-bold text-slate-900">
+          {{ event()?.date | date: 'dd/MM/yyyy' }}
         </div>
       </div>
+    </div>
   </section>
+
+  @if (event()?.giftCards) {
+    <section class="px-[240px] py-[60px]" aria-label="Giftcards do evento">
+      <h3 class="text-[26px] mb-[24px]">GIFT CARDS</h3>
+      <div class="grid gap-4 lg:grid-cols-4">
+        @for (giftCard of event()?.giftCards || []; track giftCard.code) {
+          <article
+            class="relative flex min-h-[150px] flex-col items-center justify-center gap-[20px] rounded-lg border border-slate-200 bg-white p-[12px] shadow"
+          >
+            <p-tag
+              class="absolute left-[12px] top-[12px]"
+              [rounded]="true"
+              [severity]="giftCard.dateUsed ? 'danger' : 'success'"
+              [value]="giftCard.dateUsed ? 'Usado' : 'Disponível'"
+            ></p-tag>
+
+            <p class="mt-[32px] text-center font-['Poppins'] text-[16px] text-primary">
+              {{ giftCard.code }}
+            </p>
+
+            <p-button
+              label="Copiar"
+              styleClass="!bg-primary !border-primary"
+              [disabled]="!!giftCard.dateUsed"
+              (onClick)="copyGiftCardCode(giftCard.code)"
+            ></p-button>
+          </article>
+        }
+      </div>
+    </section>
+  }
 } @else {
   <main class="flex min-h-[50vh] items-center justify-center text-slate-500">
     Carregando detalhes do evento...

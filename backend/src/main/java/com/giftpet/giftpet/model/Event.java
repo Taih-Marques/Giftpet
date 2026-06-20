@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import jakarta.persistence.CascadeType;
@@ -45,6 +44,11 @@ public class Event {
     @ManyToOne
     @JsonIncludeProperties({"id", "name"})
     private Campaign campaign;
+
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JsonIncludeProperties("id")
+    private User owner;
 
     @NotBlank
     @Size(max = 2000)
